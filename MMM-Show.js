@@ -2,7 +2,7 @@
 Module.register("MMM-Show",{
 	// Default module config.
 	defaults: {
-		text: "You!"
+		text: "Hello"
 	},
 	start: function() {
     Log.info('Starting module: ' + this.name);
@@ -13,12 +13,18 @@ Module.register("MMM-Show",{
 	},
 	// Override dom generator.
 	getDom: function() {
-
 		var wrapper = document.createElement("div");
 		wrapper.innerHTML = this.config.text;
+		//wrapper.style.fontSize="100px";//this.config.size
 		return wrapper;
 	},
-  socketNotificationReceived: function(notification, payload) {
-	   console.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
-  },
+  	socketNotificationReceived: function(notification, payload) {
+	   
+		if(notification=="show")
+		{
+		console.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
+			this.config.text=payload;
+		  this.updateDom();
+		}
+  	},
 });

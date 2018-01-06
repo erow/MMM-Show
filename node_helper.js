@@ -1,15 +1,22 @@
 var NodeHelper = require("node_helper");
+var http = require('http');
+
+//server
+
 module.exports = NodeHelper.create({
   start: function() {
     console.log('MMM-Show started ...');
-    // sendSocketNotification('show', {
-    //   type: 'notification',
-    //   title: 'MQTT Error',
-    //   message: 'The MQTT Client has suffered an error: ' + error
-    // });
+    var self=this;
+    //create a server object:
+    http.createServer(function (req, res) {
+	  res.write('ok'); //write a response to the client
+	  res.end(); //end the response
+	  //console.log(req);
+	  
+	  self.sendSocketNotification('show','You !');
+	}).listen(8087); //the server object listens on port 8087
   },
   socketNotificationReceived: function(notification, payload) {
     console.log(notification,payload);
-    this.sendSocketNotification('hello',"sf");
   }
 });
