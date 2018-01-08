@@ -5,11 +5,13 @@ Module.register("MMM-Show",{
 		text: "You!"
 	},
 	start: function() {
-    Log.info('Starting module: ' + this.name);
+    console.log('Starting module: ' + this.name);
     this.update(this);
   },
 	update: function(self) {
+		this.config.text="asdfsdf";
 		self.sendSocketNotification('MQTT_SERVER',"1");
+		this.hide();
 	},
 	// Override dom generator.
 	getDom: function() {
@@ -20,5 +22,8 @@ Module.register("MMM-Show",{
 	},
   socketNotificationReceived: function(notification, payload) {
 	   console.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
+		 this.config.text=payload;
+		 self.hide();
+
   },
 });
